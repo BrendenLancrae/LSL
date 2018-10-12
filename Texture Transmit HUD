@@ -1,0 +1,65 @@
+// 
+// Copyright (c) 2016 ::jAS:: Fresh Script (a SecondLife user)
+// 
+// This script by ::jAS: Fresh Script
+//
+// All rights reserved.
+
+
+integer menu_handler;
+integer menu_channel;
+integer channel_control = 444;
+menu(key user,string title,list buttons)
+{
+    menu_channel = (integer)(llFrand(99999.0) * -1);
+    menu_handler = llListen(menu_channel,"","","");
+    llDialog(user,title,buttons,menu_channel);
+    llSetTimerEvent(5.0);
+}
+
+default
+{
+    state_entry()
+    { llSetTouchText("Remote!");
+    }
+    touch_start(integer t)
+    {
+        menu(llDetectedKey(0),"Choose your label",["Face 1","Face 2","Face 3","Face 4"]);
+    }
+    timer()
+    {
+        llSetTimerEvent(0.0);
+        llListenRemove(menu_handler);
+    }
+    listen(integer channel,string name,key id,string message)
+    {
+        if (channel == menu_channel)
+        {
+            if(message == "Face 1")
+            {
+               
+         llWhisper(channel_control,"tex1");
+            } 
+            if(message == "Face 2")
+            {
+               
+         llWhisper(channel_control,"tex2");
+            }
+            if(message == "Face 3")
+            { 
+            
+         llWhisper(channel_control,"tex3");
+            } 
+          
+            if(message == "Face 4")
+            {
+               
+         llWhisper(channel_control,"tex4");
+            }             
+        
+// llSleep(0.50);
+ 
+// llSetColor(<1,1,1>, ALL_SIDES);
+        } 
+    }
+}
